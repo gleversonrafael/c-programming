@@ -25,10 +25,8 @@ int main(void) {
     // (b) inserts A in random coordinates
     srand((unsigned) time(NULL)); // random seed -> makes every rand call different each time the program is compiled.
 
-    // lastLine = rand() % 10;
-    // lastColumn = rand() % 10;
-    lastLine = 0;
-    lastColumn = 9;
+    lastLine = rand() % 10;
+    lastColumn = rand() % 10;
     table[lastLine][lastColumn] = 'A';
     
     for(char currentLetter = 'B'; currentLetter <= 'Z'; currentLetter++) {
@@ -43,7 +41,8 @@ int main(void) {
             nextPosition = rand() % 4;
         
             if(blocked_positions[nextPosition] == false) {
-                if(table[positions[nextPosition][0]] [positions[nextPosition][1]] == '.')
+                //checks if it goes outside the array + if its possible to insert the element in the corresponding space
+                if(positions[nextPosition][1] >= 0 && positions[nextPosition][1] < 10 && table[positions[nextPosition][0]] [positions[nextPosition][1]] == '.')
                     break;
                 
                 else {
@@ -55,10 +54,10 @@ int main(void) {
 
         // (d) insert into next position
         if(attempts != 4) {
-            table[positions[nextPosition][0]] [positions[nextPosition][1]] = currentLetter;
-
             lastLine = positions[nextPosition][0];
             lastColumn = positions[nextPosition][1];
+
+            table[lastLine][lastColumn] = currentLetter;
         
         } else 
             break;
