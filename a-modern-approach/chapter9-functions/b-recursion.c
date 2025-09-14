@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-long double obtainFactorial(long double);
+long double obtainFactorial(long double n);
 
 int 
 main(void) 
@@ -9,11 +9,12 @@ main(void)
     long double factorialResult = 1.0, selectedNumber;
   
     printf("|| Selected number: ");
-    scanf("%llf", &selectedNumber);
+    scanf("%Lf", &selectedNumber);
 
     factorialResult = obtainFactorial(selectedNumber);
 
-    printf("|| Factorial result: %llf", factorialResult);
+    printf("|| Factorial result: %Lf", factorialResult);
+    
 
     exit(EXIT_SUCCESS);
 }
