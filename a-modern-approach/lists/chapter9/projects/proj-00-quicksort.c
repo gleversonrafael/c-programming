@@ -1,66 +1,68 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
-#define ARRAY_LENGTH 10
+#define ARRAY_LENGTH 4
 
-void sortWithQuicksort(double array[], unsigned short int low, unsigned short int high);
+void sortWithQuicksort(double array[], unsigned short low, unsigned short high, bool leftPartition, bool rightPartition);
 void outputArray(double array[]);
 
 int 
 main(void)
 {
     double mainArray[ARRAY_LENGTH] = {0};
-    int current = 0;
 
+    //E
     printf("Enter %d numbers to be sorted: ", ARRAY_LENGTH);
 
-    for(; current < ARRAY_LENGTH; current++) 
+    for(int current = 0; current < ARRAY_LENGTH; current++) 
         scanf("%lf", &mainArray[current])
     ;
 
-    sortWithQuicksort(mainArray, 0, ARRAY_LENGTH - 1);
+    //P
+    sortWithQuicksort(mainArray, 0, ARRAY_LENGTH - 1, true, true);
+    
+    //S
     outputArray(mainArray);
 
-    return 0;
+    exit(EXIT_SUCCESS);
 }
 
-// FINISH....
-
 void
-sortWithQuicksort(double array[], unsigned short int low, unsigned short high)
+sortWithQuicksort(double array[], unsigned short low, unsigned short high, bool leftPartition, bool rightPartition)
 {
-    unsigned short int hole = low;
+    unsigned short hole = low, middle;
     double outside = array[low];
     
-    while(low != high) 
+    for(;;)
     {
-        while(array[high] > outside) 
-        {
+        while(array[high] >= outside && low < high) 
             high--;
 
-            if(high == low) 
-                goto finish;
-        }
-
+        if(low >= high) break;
+        
         array[hole] = array[high];
+        low++;
         hole = high;
         
-        while(array[low] <= outside) 
-        {
+        while(array[low] < outside && low < high) 
             low++;
 
-            if(high == low) 
-                goto finish;
-        }
+        if(low >= high) break;
 
         array[hole] = array[low];
+        high--;
         hole = low;
     }
 
-    finish:array[low] = outside;
+    middle = low;
+    array[middle] = outside;
 
-    if(low - 1 > 0 && low + 1 < ARRAY_LENGTH)
-        sortWithQuicksort(array, low - 1, low + 1);
+    if(leftPartition && middle - 1 > 0) 
+        sortWithQuicksort(array, 0, middle - 1, true, false);
+        
+    if(rightPartition && middle + 1 < ARRAY_LENGTH)
+        sortWithQuicksort(array, middle + 1, ARRAY_LENGTH - 1, false, true);
 }
 
 
